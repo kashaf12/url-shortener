@@ -2,13 +2,13 @@
 
 <p align="center">
   <a href="#readme">
-    <img src="https://img.shields.io/badge/pnpm-v9.0.0-orange?style=for-the-badge&logo=pnpm" alt="pnpm Version" />
+    <img src="https://img.shields.io/badge/pnpm-v9.0.0-blue?style=for-the-badge&logo=pnpm" alt="pnpm Version" />
   </a>
   <a href="#readme">
     <img src="https://img.shields.io/badge/TypeScript-v5.8.3-blue?style=for-the-badge&logo=typescript" alt="TypeScript Version" />
   </a>
   <a href="#readme">
-    <img src="https://img.shields.io/github/license/kashaf12/url-shortener?style=for-the-badge" alt="License" />
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License" />
   </a>
 </p>
 
