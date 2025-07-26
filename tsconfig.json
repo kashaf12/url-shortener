@@ -1,26 +1,11 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2022"],
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
+    "jsx": "preserve"
   },
   "files": [],
-  "references": [
-    { "path": "./packages/types" }
-    // { "path": "./packages/react" },
-    // { "path": "./apps/frontend" },
-    // { "path": "./apps/backend" }
-  ]
+  "references": [{ "path": "./packages/types" }]
 }

@@ -5,12 +5,16 @@
   "private": true,
   "scripts": {
     "dev": "turbo run dev",
+    "start:backend": "pnpm --filter ./apps/backend run start",
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
     "type-check:root": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint:root": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "url-shortener",
@@ -22,7 +26,6 @@
   "license": "MIT",
   "packageManager": "pnpm@9.0.0",
   "devDependencies": {
-    "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.32.0",
     "@eslint/json": "^0.13.1",
     "@eslint/markdown": "^7.1.0",

@@ -12,7 +12,9 @@
   </a>
 </p>
 
-This project is a modern, high-performance URL shortener platform built with a monorepo architecture using Turborepo. It features a Next.js frontend, a NestJS backend, and is designed for scalability and ease of development.
+This project is a modern, high-performance URL shortener platform built with a monorepo architecture
+using Turborepo. It features a Next.js frontend, a NestJS backend, and is designed for scalability
+and ease of development.
 
 ## Features
 
@@ -58,7 +60,8 @@ To start the development servers for all applications and packages, run:
 pnpm dev
 ```
 
-This will use Turborepo to run the `dev` script in each package, enabling hot-reloading and parallel execution.
+This will use Turborepo to run the `dev` script in each package, enabling hot-reloading and parallel
+execution.
 
 ## Project Structure
 
@@ -78,7 +81,8 @@ The monorepo is structured as follows:
 
 ## Contributing
 
-Contributions are welcome! Please see the [contributing guidelines](CONTRIBUTING.md) for more information.
+Contributions are welcome! Please see the [contributing guidelines](CONTRIBUTING.md) for more
+information.
 
 ## License
 

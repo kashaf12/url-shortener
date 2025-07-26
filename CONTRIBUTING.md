@@ -15,26 +15,34 @@ We use GitHub to host code, to track issues and feature requests, as well as acc
 
 ### Reporting Bugs
 
-Bugs are tracked as [GitHub issues](https://github.com/kashaf12/url-shortener/issues). When you are creating a bug report, please include as many details as possible. Explain the problem and include additional details to help maintainers reproduce the problem:
+Bugs are tracked as [GitHub issues](https://github.com/kashaf12/url-shortener/issues). When you are
+creating a bug report, please include as many details as possible. Explain the problem and include
+additional details to help maintainers reproduce the problem:
 
 - **Use a clear and descriptive title** for the issue to identify the problem.
 - **Describe the exact steps which reproduce the problem** in as many details as possible.
-- **Provide specific examples to demonstrate the steps.** Include links to files or GitHub projects, or copy/pasteable snippets, which you use in those examples.
-- **Describe the behavior you observed after following the steps** and point out what exactly is the problem with that behavior.
+- **Provide specific examples to demonstrate the steps.** Include links to files or GitHub projects,
+  or copy/pasteable snippets, which you use in those examples.
+- **Describe the behavior you observed after following the steps** and point out what exactly is the
+  problem with that behavior.
 - **Explain which behavior you expected to see instead and why.**
 
 ### Suggesting Enhancements
 
-Enhancement suggestions are tracked as [GitHub issues](https://github.com/kashaf12/url-shortener/issues).
+Enhancement suggestions are tracked as
+[GitHub issues](https://github.com/kashaf12/url-shortener/issues).
 
 - **Use a clear and descriptive title** for the issue to identify the suggestion.
-- **Provide a step-by-step description of the suggested enhancement** in as many details as possible.
-- **Provide specific examples to demonstrate the steps.** Include copy/pasteable snippets which you use in those examples.
+- **Provide a step-by-step description of the suggested enhancement** in as many details as
+  possible.
+- **Provide specific examples to demonstrate the steps.** Include copy/pasteable snippets which you
+  use in those examples.
 - **Explain why this enhancement would be useful** to most users.
 
 ### Pull Requests
 
-Pull requests are the best way to propose changes to the codebase. We actively welcome your pull requests:
+Pull requests are the best way to propose changes to the codebase. We actively welcome your pull
+requests:
 
 1.  Fork the repo and create your branch from `main`.
 2.  If you've added code that should be tested, add tests.
@@ -54,4 +62,5 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 
 ### Code Style
 
-We use Prettier and ESLint to maintain a consistent code style. Please run `pnpm lint` before committing your changes.
+We use Prettier and ESLint to maintain a consistent code style. Please run `pnpm lint` before
+committing your changes.
