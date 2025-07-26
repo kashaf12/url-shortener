@@ -1,0 +1,11 @@
+node_modules
+.claude
+.turbo
+ai-agent
+CLAUDE.md
+.tsbuildinfo
+dist
+build
+coverage
+.vscode-test
+repopack-output.txt
