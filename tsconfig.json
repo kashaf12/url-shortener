@@ -11,13 +11,16 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
   },
   "files": [],
   "references": [
-    {
-      "path": "./packages/types"
-    }
+    { "path": "./packages/types" }
+    // { "path": "./packages/react" },
+    // { "path": "./apps/frontend" },
+    // { "path": "./apps/backend" }
   ]
 }
