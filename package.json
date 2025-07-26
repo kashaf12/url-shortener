@@ -9,12 +9,12 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
+    "lint:root": "eslint . --fix",
     "type-check": "turbo run type-check",
     "type-check:root": "tsc --noEmit",
-    "prepare": "husky",
-    "lint:root": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "keywords": [
     "url-shortener",
