@@ -1,12 +1,17 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
+import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { AppModule } from "./app.module";
 import { cleanupOpenApiDoc } from "nestjs-zod";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Replace default NestJS logger with Winston
+  const winstonLogger = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  app.useLogger(winstonLogger);
 
   // Enable CORS for frontend integration
   app.enableCors();
@@ -27,8 +32,20 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>("PORT", 8000);
+
   await app.listen(port);
-  console.log(`🚀 Application is running on: http://localhost:${port}/v1`);
-  console.log(`📚 API Documentation: http://localhost:${port}/v1/docs`);
+  winstonLogger.log(
+    `🌍 Application is running in ${configService.get("NODE_ENV")} mode`,
+    "Bootstrap"
+  );
+
+  winstonLogger.log(
+    `🚀 Application is running on: http://localhost:${port}/v1`,
+    "Bootstrap"
+  );
+  winstonLogger.log(
+    `📚 API Documentation: http://localhost:${port}/v1/docs`,
+    "Bootstrap"
+  );
 }
 void bootstrap();
