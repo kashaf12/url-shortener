@@ -5,12 +5,16 @@ monorepo.
 
 ## Features
 
-- Fast URL shortening and redirection
-- Click tracking and analytics
-- Swagger API documentation
-- PostgreSQL with TypeORM
-- Jest testing framework
-- Input validation with Zod
+- ✅ Fast URL shortening and redirection
+- ✅ Click tracking and analytics
+- ✅ Swagger API documentation
+- ✅ PostgreSQL with TypeORM
+- ✅ Jest testing framework
+- ✅ Input validation with Zod
+- ✅ Structured logging with Winston
+- ✅ Request/response logging with correlation IDs
+- ✅ Health check endpoint
+- ✅ Environment-specific configuration
 
 ## Quick Start
 
@@ -52,8 +56,8 @@ docker run --name postgres \
 ## API Endpoints
 
 - `POST /v1/shorten` - Create short URL
-- `GET /v1/:slug` - Redirect to original URL
-- `POST /v1/unshorten` - Get original URL
+- `GET /v1/:slug` - Redirect to original URL (with click tracking)
+- `POST /v1/unshorten` - Get original URL and metadata
 - `GET /v1/health` - Health check
 - `GET /v1/docs` - Swagger documentation
 
@@ -71,6 +75,8 @@ DATABASE_NAME=url_shortener
 DATABASE_USERNAME=postgres
 DATABASE_PASSWORD=postgres
 BASE_URL=http://localhost:8000
+LOG_LEVEL=debug
+SERVICE_NAME=url-shortener-api
 ```
 
 ## Available Scripts
@@ -110,7 +116,8 @@ Response:
 {
   "short_url": "http://localhost:8000/v1/abc123",
   "slug": "abc123",
-  "url": "https://example.com"
+  "original_url": "https://example.com",
+  "created_at": "2025-01-27T10:30:00.000Z"
 }
 ```
 
@@ -122,13 +129,29 @@ curl -X POST http://localhost:8000/v1/unshorten \
   -d '{"slug": "abc123"}'
 ```
 
+Response:
+
+```json
+{
+  "original_url": "https://example.com",
+  "slug": "abc123",
+  "click_count": 5,
+  "created_at": "2025-01-27T10:30:00.000Z"
+}
+```
+
 ## Project Structure
 
-```
+```bash
 apps/backend/
 ├── src/
+│   ├── config/             # Configuration (logger, swagger)
 │   ├── health/             # Health check module
 │   ├── link/               # URL shortening module
+│   │   ├── dto/            # Data transfer objects
+│   │   ├── entities/       # TypeORM entities
+│   │   └── *.ts            # Controllers and services
+│   ├── middleware/         # Request logging middleware
 │   ├── app.module.ts       # Main app module
 │   └── main.ts             # Application entry
 ├── test/                   # E2E tests
@@ -142,6 +165,42 @@ Current test status: **5 test suites, 10 tests passing** ✅
 - Unit tests: `*.spec.ts` files alongside source
 - E2E tests: `test/` directory
 - Coverage reports: `pnpm test:cov`
+
+## Logging
+
+The backend includes comprehensive structured logging with Winston:
+
+- **Request/Response Logging**: All HTTP requests are logged with correlation IDs
+- **Environment-Specific Formatting**: Console output in development, JSON + file rotation in
+  production
+- **Log Levels**: Configurable via `LOG_LEVEL` environment variable
+- **Request Correlation**: Each request gets a unique ID for tracing across logs
+
+Log files (production only):
+
+- `logs/combined.log` - All logs
+- `logs/error.log` - Error logs only
+
+## Current Status
+
+**Backend MVP Status: ~80% Complete** ✅
+
+**Implemented:**
+
+- ✅ Full REST API with all endpoints
+- ✅ PostgreSQL database integration
+- ✅ Click tracking and analytics
+- ✅ Swagger documentation
+- ✅ Comprehensive testing suite
+- ✅ Structured logging system
+- ✅ Environment configuration
+
+**Remaining Tasks:**
+
+- [ ] Enhanced URL validation
+- [ ] Improved slug generation (nanoid)
+- [ ] Rate limiting middleware
+- [ ] CORS configuration for frontend
 
 ## Troubleshooting
 

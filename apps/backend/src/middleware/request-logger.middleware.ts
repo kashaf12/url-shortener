@@ -61,7 +61,7 @@ export class RequestLoggerMiddleware implements NestMiddleware {
 
       // Include response body for non-2xx status codes or if it's small
       if (statusCode >= 400 || (responseBody && responseBody.length < 1000)) {
-        (responseLog as any).responseBody = responseBody;
+        responseLog.responseBody = responseBody;
       }
 
       // Log at appropriate level based on status code

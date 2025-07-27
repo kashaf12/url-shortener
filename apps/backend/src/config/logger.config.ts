@@ -5,12 +5,15 @@ import { format, transports } from "winston";
 export const createLoggerConfig = (
   configService: ConfigService
 ): WinstonModuleOptions => {
-  const nodeEnv = configService.get("NODE_ENV", "development");
-  const logLevel = configService.get(
+  const nodeEnv = configService.get<string>("NODE_ENV", "development");
+  const logLevel = configService.get<string>(
     "LOG_LEVEL",
     nodeEnv === "production" ? "info" : "debug"
   );
-  const service = configService.get("SERVICE_NAME", "url-shortener-api");
+  const service = configService.get<string>(
+    "SERVICE_NAME",
+    "url-shortener-api"
+  );
 
   const baseFormat = format.combine(
     format.timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),
@@ -25,7 +28,6 @@ export const createLoggerConfig = (
     format.printf(info => {
       const { timestamp, level, message, label, ...rest } = info;
 
-      // Remove Winston-internal fields
       const { metadata, ...others } = rest;
 
       const meta = metadata || others;
@@ -35,7 +37,7 @@ export const createLoggerConfig = (
           ? `\n${JSON.stringify(meta, null, 2)}`
           : "";
 
-      return `${timestamp} [${label}] ${level}: ${message}${metaStr}`;
+      return `${String(timestamp)} [${String(label)}] ${String(level)}: ${String(message)}${metaStr}`;
     })
   );
 
