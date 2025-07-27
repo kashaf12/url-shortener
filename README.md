@@ -16,6 +16,11 @@ This project is a modern, high-performance URL shortener platform built with a m
 using Turborepo. It features a Next.js frontend, a NestJS backend, and is designed for scalability
 and ease of development.
 
+## 🚀 Live Demo
+
+**Frontend:**
+[https://url-shortener-frontend-plum.vercel.app/](https://url-shortener-frontend-plum.vercel.app/)
+
 ## Features
 
 - **Monorepo Architecture:** Centralized management with pnpm workspaces and Turborepo
@@ -81,6 +86,19 @@ The backend will be available at:
 - **Swagger Documentation**: http://localhost:8000/v1/docs
 - **Health Check**: http://localhost:8000/v1/health
 
+#### Frontend Development
+
+To run just the frontend Next.js application:
+
+```bash
+pnpm dev:frontend
+```
+
+The frontend will be available at:
+
+- **Frontend**: http://localhost:3000
+- **Live Demo**: https://url-shortener-frontend-plum.vercel.app/
+
 #### Database Setup
 
 Start the PostgreSQL database using Docker:
@@ -95,6 +113,7 @@ The database will be available at `localhost:5432` with the credentials defined 
 ### Available Scripts
 
 - `pnpm dev` - Start all development servers
+- `pnpm dev:frontend` - Start frontend only
 - `pnpm dev:backend` - Start backend with database
 - `pnpm start:backend` - Start backend only
 - `pnpm docker:up` - Start PostgreSQL database
@@ -113,7 +132,7 @@ The monorepo is structured as follows:
 .
 ├── apps/
 │   ├── backend/        # NestJS API (✅ Implemented)
-│   └── frontend/       # Next.js Web App (Planned)
+│   └── frontend/       # Next.js Web App (✅ Implemented & Deployed)
 ├── packages/
 │   ├── types/          # Shared TypeScript types (✅ Implemented)
 │   ├── ui/             # Shared React components (Planned)
@@ -158,6 +177,8 @@ Once the backend is running, the following endpoints are available:
 - Jest testing framework (10 tests passing)
 - Shared TypeScript types package
 - Docker setup for PostgreSQL
+- **Next.js frontend application with shadcn/ui**
+- **Frontend deployed to Vercel**
 
 ### 🚧 In Progress
 
@@ -167,7 +188,6 @@ Once the backend is running, the following endpoints are available:
 
 ### 📋 Planned
 
-- Next.js frontend application
 - React hooks package for API integration
 - Shared UI components package
 

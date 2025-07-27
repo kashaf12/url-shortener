@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:backend": "pnpm docker:up && pnpm --filter backend run start:dev",
+    "dev:frontend": "pnpm docker:up && pnpm --filter frontend run dev",
     "start:backend": "pnpm --filter backend run start",
+    "start:frontend": "pnpm --filter frontend run start",
     "docker:up": "docker compose up -d postgres",
     "docker:down": "docker compose down",
     "build": "turbo run build",
