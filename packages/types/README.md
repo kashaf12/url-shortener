@@ -146,7 +146,6 @@ All types have corresponding Zod schemas for runtime validation:
 - `ShortenResponseSchema`
 - `UnshortenRequestSchema`
 - `UnshortenResponseSchema`
-- `ErrorResponseSchema`
 
 ### Validation Features
 

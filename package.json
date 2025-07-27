@@ -5,7 +5,10 @@
   "private": true,
   "scripts": {
     "dev": "turbo run dev",
-    "start:backend": "pnpm --filter ./apps/backend run start",
+    "start:backend": "pnpm --filter backend run start",
+    "docker:up": "docker compose up -d postgres",
+    "docker:down": "docker compose down",
+    "dev:backend": "pnpm --filter backend run start:dev",
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
