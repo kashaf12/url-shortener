@@ -1,7 +1,6 @@
 import { createZodDto } from "nestjs-zod";
 import {
   ShortenResponseSchema,
-  UnshortenRequestSchema,
   UnshortenResponseSchema,
 } from "@url-shortener/types";
 
