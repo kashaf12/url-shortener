@@ -1,9 +1,9 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
-import { patchNestJsSwagger, ZodValidationPipe } from "nestjs-zod";
+
 import { AppModule } from "./app.module";
-// import { ValidationPipe } from "@nestjs/common";
+import { cleanupOpenApiDoc } from "nestjs-zod";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,20 +14,6 @@ async function bootstrap() {
   // Set global prefix for API routes
   app.setGlobalPrefix("v1");
 
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     transform: true,
-  //     whitelist: true,
-  //     forbidNonWhitelisted: true,
-  //     validateCustomDecorators: true,
-  //   })
-  // );
-
-  app.useGlobalPipes(new ZodValidationPipe());
-
-  // Patch NestJS Swagger to work with Zod
-  patchNestJsSwagger();
-
   // Setup Swagger documentation
   const config = new DocumentBuilder()
     .setTitle("URL Shortener API")
@@ -37,7 +23,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("v1/docs", app, document);
+  SwaggerModule.setup("v1/docs", app, cleanupOpenApiDoc(document));
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>("PORT", 8000);

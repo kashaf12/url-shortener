@@ -6,6 +6,8 @@ import { AppService } from "./app.service";
 import { HealthModule } from "./health/health.module";
 import { LinkModule } from "./link/link.module";
 import { Link } from "./link/entities/link.entity";
+import { APP_PIPE } from "@nestjs/core";
+import { ZodValidationPipe } from "nestjs-zod";
 
 @Module({
   imports: [
@@ -32,6 +34,12 @@ import { Link } from "./link/entities/link.entity";
     LinkModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
+    },
+  ],
 })
 export class AppModule {}

@@ -37,7 +37,6 @@ export class LinkController {
   async unshorten(
     @Body() request: UnshortenRequestDto
   ): Promise<UnshortenResponseDto> {
-    console.log("Unshorten request received:", request);
     return this.linkService.unshorten(request.slug);
   }
 
