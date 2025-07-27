@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { AppModule } from "./app.module";
-import { cleanupOpenApiDoc } from "nestjs-zod";
+import { setupSwagger } from "./config/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,16 +19,7 @@ async function bootstrap() {
   // Set global prefix for API routes
   app.setGlobalPrefix("v1");
 
-  // Setup Swagger documentation
-  const config = new DocumentBuilder()
-    .setTitle("URL Shortener API")
-    .setDescription("A fast and reliable URL shortening service")
-    .setVersion("1.0")
-    .addTag("url-shortener")
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("v1/docs", app, cleanupOpenApiDoc(document));
+  setupSwagger(app);
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>("PORT", 8000);

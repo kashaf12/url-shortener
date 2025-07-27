@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { WinstonModule } from "nest-winston";
@@ -10,6 +10,7 @@ import { Link } from "./link/entities/link.entity";
 import { APP_PIPE } from "@nestjs/core";
 import { ZodValidationPipe } from "nestjs-zod";
 import { createLoggerConfig } from "./config/logger.config";
+import { RequestLoggerMiddleware } from "./middleware/request-logger.middleware";
 
 @Module({
   imports: [
@@ -50,4 +51,8 @@ import { createLoggerConfig } from "./config/logger.config";
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestLoggerMiddleware).forRoutes("*");
+  }
+}

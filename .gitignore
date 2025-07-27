@@ -10,3 +10,4 @@ coverage
 .vscode-test
 repopack-output.txt
 .env
+*.log
