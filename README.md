@@ -77,9 +77,9 @@ pnpm dev:backend
 
 The backend will be available at:
 
-- **API**: http://localhost:8000
-- **Swagger Documentation**: http://localhost:8000/api
-- **Health Check**: http://localhost:8000/health
+- **API**: http://localhost:8000/v1
+- **Swagger Documentation**: http://localhost:8000/v1/docs
+- **Health Check**: http://localhost:8000/v1/health
 
 #### Database Setup
 
@@ -92,6 +92,19 @@ pnpm docker:up
 The database will be available at `localhost:5432` with the credentials defined in
 `docker-compose.yml`.
 
+### Available Scripts
+
+- `pnpm dev` - Start all development servers
+- `pnpm dev:backend` - Start backend with database
+- `pnpm start:backend` - Start backend only
+- `pnpm docker:up` - Start PostgreSQL database
+- `pnpm docker:down` - Stop PostgreSQL database
+- `pnpm build` - Build all packages
+- `pnpm test` - Run all tests
+- `pnpm lint` - Run linting
+- `pnpm format` - Format code
+- `pnpm type-check` - Type check all packages
+
 ## Project Structure
 
 The monorepo is structured as follows:
@@ -100,24 +113,9 @@ The monorepo is structured as follows:
 .
 ├── apps/
 │   ├── backend/        # NestJS API (✅ Implemented)
-│   │   ├── src/
-│   │   │   ├── health/ # Health check module
-│   │   │   ├── link/   # URL shortening module
-│   │   │   │   ├── dto/         # Data transfer objects
-│   │   │   │   ├── entities/    # TypeORM entities
-│   │   │   │   ├── link.controller.ts
-│   │   │   │   ├── link.service.ts
-│   │   │   │   └── link.module.ts
-│   │   │   └── main.ts
-│   │   └── package.json
 │   └── frontend/       # Next.js Web App (Planned)
 ├── packages/
 │   ├── types/          # Shared TypeScript types (✅ Implemented)
-│   │   ├── src/
-│   │   │   ├── api.ts       # API request/response types
-│   │   │   ├── entities/    # Entity types
-│   │   │   └── index.ts
-│   │   └── package.json
 │   ├── ui/             # Shared React components (Planned)
 │   └── react/          # React hooks for API interaction (Planned)
 ├── ai-agent/           # Project planning and documentation
@@ -134,46 +132,44 @@ information.
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Progress
+## API Endpoints
 
-### Phase 1: Foundation & Monorepo Setup ✅ COMPLETED
+Once the backend is running, the following endpoints are available:
 
-- [x] **1.1.1** Initialize root package.json with pnpm workspaces (no hardcoded deps)
-- [x] **1.1.2** Install latest dev dependencies via CLI (TypeScript, ESLint, Prettier)
-- [x] **1.1.3** Set up Turbo configuration (turbo.json) with proper pipeline
-- [x] **1.1.4** Create root TypeScript config with project references
-- [x] **1.1.5** Configure ESLint and Prettier for monorepo _(implemented with modern flat config)_
-- [x] **1.1.6** Create directory structure (apps/, packages/, docs/)
-- [x] **1.1.7** Set up .gitignore and basic README _(includes contributing guidelines)_
+### URL Shortening
 
-### Phase 2: Backend API Development ✅ COMPLETED
+- `POST /v1/shorten` - Create a short URL
+- `POST /v1/unshorten` - Get original URL from slug
+- `GET /v1/:slug` - Redirect to original URL
 
-- [x] **2.1.1** Initialize NestJS app in apps/backend with CLI
-- [x] **2.1.2** Install backend dependencies (NestJS, TypeORM, PostgreSQL driver, nestjs-zod)
-- [x] **2.1.3** Set up Swagger/OpenAPI documentation with @nestjs/swagger
-- [x] **2.1.4** Configure environment variables with @nestjs/config
-- [x] **2.1.5** Set up TypeORM configuration with PostgreSQL connection
-- [x] **2.1.6** Create basic app structure (modules, controllers, services)
-- [x] **2.1.7** Implement health check endpoint (/health) with dedicated module
-- [x] **2.2.1** Create Link entity with TypeORM decorators
-- [x] **2.2.3** Set up database migrations
-- [x] **2.4.1** Implement POST /shorten endpoint with validation
-- [x] **2.4.2** Implement GET /:slug redirect handler
-- [x] **2.4.3** Implement POST /unshorten endpoint
-- [x] **2.6.1** Set up Jest testing framework
+### Health & Documentation
 
-### Phase 3: Frontend Development (Next Phase)
+- `GET /v1/health` - Health check endpoint
+- `GET /v1/docs` - Swagger API documentation
 
-- [ ] **3.1.1** Initialize Next.js 14+ app with App Router
-- [ ] **3.1.2** Install frontend dependencies (TanStack Query, shadcn/ui)
-- [ ] **3.1.3** Set up Tailwind CSS configuration
+## Development Status
 
-### Types Package Progress
+### ✅ Completed
 
-- [x] **1.2.1** Create packages/types structure with package.json
-- [x] **1.2.2** Set up TypeScript config for types package
-- [x] **1.2.3** Install Zod for runtime validation
-- [x] **1.2.4** Implement core API types (ShortenRequest, ShortenResponse)
+- Monorepo setup with pnpm workspaces and Turborepo
+- NestJS backend with TypeORM and PostgreSQL
+- Complete API endpoints for URL shortening
+- Swagger documentation
+- Jest testing framework (10 tests passing)
+- Shared TypeScript types package
+- Docker setup for PostgreSQL
+
+### 🚧 In Progress
+
+- Enhanced URL validation
+- Improved slug generation with nanoid
+- Rate limiting middleware
+
+### 📋 Planned
+
+- Next.js frontend application
+- React hooks package for API integration
+- Shared UI components package
 
 ## Developer Details
 
