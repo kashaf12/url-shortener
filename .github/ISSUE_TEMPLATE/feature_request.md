@@ -1,7 +1,8 @@
 ---
-name: Feature Request about: Suggest a new feature or improvement title: "[Feature]
-<concise summary>" labels: [enhancement]
-
+name: Feature Request
+about: Suggest a new feature or improvement
+title: "[Feature]<concise summary>"
+labels: [enhancement]
 ---
 
 **What would you like to add or improve?**
