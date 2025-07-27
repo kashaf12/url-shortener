@@ -147,11 +147,13 @@ export function UrlShortenerForm() {
         try {
           const parsedUrls = JSON.parse(decodeURIComponent(storedUrls));
           setShortenedUrls(
-            parsedUrls.map((url: any) => ({
-              ...url,
-              expiresAt: url.expiresAt ? new Date(url.expiresAt) : undefined,
-              createdAt: url.createdAt ? new Date(url.createdAt) : new Date(),
-            }))
+            parsedUrls.map(
+              (url: { expiresAt?: string; createdAt: string }) => ({
+                ...url,
+                expiresAt: url.expiresAt ? new Date(url.expiresAt) : undefined,
+                createdAt: url.createdAt ? new Date(url.createdAt) : new Date(),
+              })
+            )
           );
         } catch (error) {
           console.error("Error parsing stored URLs:", error);
@@ -170,11 +172,13 @@ export function UrlShortenerForm() {
       if (historyData) {
         const parsedHistory = JSON.parse(historyData);
         setHistoryUrls(
-          parsedHistory.map((url: any) => ({
-            ...url,
-            expiresAt: url.expiresAt ? new Date(url.expiresAt) : undefined,
-            createdAt: url.createdAt ? new Date(url.createdAt) : new Date(),
-          }))
+          parsedHistory.map(
+            (url: { expiresAt?: string; createdAt: string }) => ({
+              ...url,
+              expiresAt: url.expiresAt ? new Date(url.expiresAt) : undefined,
+              createdAt: url.createdAt ? new Date(url.createdAt) : new Date(),
+            })
+          )
         );
       }
     } catch (error) {
@@ -245,10 +249,9 @@ export function UrlShortenerForm() {
     e.preventDefault();
 
     if (!url) {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: "Please enter a valid URL",
-        variant: "destructive",
+        dismissible: true,
       });
       return;
     }
@@ -257,10 +260,9 @@ export function UrlShortenerForm() {
     try {
       new URL(url);
     } catch (error) {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: "Please enter a valid URL with http:// or https://",
-        variant: "destructive",
+        dismissible: true,
       });
       return;
     }
@@ -271,10 +273,9 @@ export function UrlShortenerForm() {
       customExpirationDate
     );
     if (expirationDate && isBefore(expirationDate, new Date())) {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: "Expiration date cannot be in the past",
-        variant: "destructive",
+        dismissible: true,
       });
       return;
     }
@@ -324,8 +325,7 @@ export function UrlShortenerForm() {
       setMetadata({ title: "", tags: "", source: "" });
       setShowSuccessCard(true);
 
-      toast({
-        title: isDuplicate ? "Duplicate URL Found!" : "Success!",
+      toast(isDuplicate ? "Duplicate URL Found!" : "Success!", {
         description: isDuplicate
           ? "This URL was already shortened. Returning existing short URL."
           : "Your URL has been shortened successfully.",
@@ -349,8 +349,7 @@ export function UrlShortenerForm() {
 
   const removeBulkEntry = (id: string) => {
     if (bulkEntries.length === 1) {
-      toast({
-        title: "Cannot remove",
+      toast("Cannot remove", {
         description: "You need at least one URL entry",
       });
       return;
@@ -362,7 +361,7 @@ export function UrlShortenerForm() {
   const updateBulkEntry = (
     id: string,
     field: keyof BulkUrlEntry,
-    value: any
+    value: string | Date | undefined | ExpirationOption
   ) => {
     setBulkEntries(
       bulkEntries.map(entry => {
@@ -378,10 +377,9 @@ export function UrlShortenerForm() {
     e.preventDefault();
 
     if (bulkEntries.length === 0) {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: "Please add at least one URL",
-        variant: "destructive",
+        dismissible: true,
       });
       return;
     }
@@ -389,10 +387,9 @@ export function UrlShortenerForm() {
     // Validate all entries
     const emptyUrls = bulkEntries.filter(entry => !entry.url.trim());
     if (emptyUrls.length > 0) {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: `${emptyUrls.length} URL(s) are empty. Please fill all URL fields.`,
-        variant: "destructive",
+        dismissible: true,
       });
       return;
     }
@@ -408,10 +405,9 @@ export function UrlShortenerForm() {
     });
 
     if (invalidUrls.length > 0) {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: `${invalidUrls.length} invalid URL(s) found. Please ensure all URLs include http:// or https://`,
-        variant: "destructive",
+        dismissible: true,
       });
       return;
     }
@@ -426,10 +422,9 @@ export function UrlShortenerForm() {
     });
 
     if (invalidDates.length > 0) {
-      toast({
-        title: "Error",
+      toast("Error", {
         description: `${invalidDates.length} URL(s) have expiration dates in the past`,
-        variant: "destructive",
+        dismissible: true,
       });
       return;
     }
@@ -485,8 +480,7 @@ export function UrlShortenerForm() {
       ]);
 
       const duplicateCount = shortened.filter(url => url.isDuplicate).length;
-      toast({
-        title: "Success!",
+      toast("Success!", {
         description: `${shortened.length} URLs have been shortened successfully.${duplicateCount > 0 ? ` ${duplicateCount} duplicates found.` : ""}`,
       });
     }, 1500);
@@ -496,8 +490,7 @@ export function UrlShortenerForm() {
     navigator.clipboard.writeText(url);
     setCopied(url);
 
-    toast({
-      title: "Copied!",
+    toast("Copied!", {
       description: "Link copied to clipboard",
     });
 
@@ -508,8 +501,7 @@ export function UrlShortenerForm() {
     const allUrls = shortenedUrls.map(item => item.shortUrl).join("\n");
     navigator.clipboard.writeText(allUrls);
 
-    toast({
-      title: "Copied!",
+    toast("Copied!", {
       description: "All links copied to clipboard",
     });
   };
@@ -590,8 +582,7 @@ export function UrlShortenerForm() {
   };
 
   const handleEditAlias = (url: string) => {
-    toast({
-      title: "Edit Alias",
+    toast("Edit Alias", {
       description: `Editing alias for ${url}`,
     });
   };
@@ -614,10 +605,9 @@ export function UrlShortenerForm() {
       }
     }
 
-    toast({
-      title: "Delete",
+    toast("Delete", {
       description: `Deleted ${url}`,
-      variant: "destructive",
+      dismissible: true,
     });
   };
 
@@ -625,8 +615,7 @@ export function UrlShortenerForm() {
     setHistoryUrls([]);
     localStorage.removeItem("url_shortener_history");
 
-    toast({
-      title: "History Cleared",
+    toast("History Cleared", {
       description: "All your URL history has been cleared",
     });
   };
@@ -839,8 +828,8 @@ export function UrlShortenerForm() {
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
               <p className="text-sm text-blue-800 flex items-center gap-2">
                 <Info className="h-4 w-4" />
-                Your links are saved in your browser and accessible from the "My
-                Links" tab.
+                Your links are saved in your browser and accessible from the
+                &quot;My Links&quot; tab.
               </p>
             </div>
 
