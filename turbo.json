@@ -17,6 +17,14 @@
       "cache": false,
       "persistent": true
     },
+    "docker:up": {
+      "cache": false,
+      "persistent": true
+    },
+    "docker:down": {
+      "cache": false,
+      "persistent": true
+    },
     "lint": {
       "dependsOn": ["^build"]
     },

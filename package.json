@@ -5,18 +5,18 @@
   "private": true,
   "scripts": {
     "dev": "turbo run dev",
+    "dev:backend": "pnpm docker:up && pnpm --filter backend run start:dev",
     "start:backend": "pnpm --filter backend run start",
     "docker:up": "docker compose up -d postgres",
     "docker:down": "docker compose down",
-    "dev:backend": "pnpm --filter backend run start:dev",
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "lint:root": "eslint . --fix",
-    "type-check": "turbo run type-check",
-    "type-check:root": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "type-check": "turbo run type-check",
+    "type-check:root": "tsc --noEmit",
     "prepare": "husky"
   },
   "keywords": [
