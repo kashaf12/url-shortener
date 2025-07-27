@@ -138,12 +138,9 @@ curl -X POST http://localhost:8000/v1/api/shorten \
 
 ```json
 {
-  "id": "abc123",
-  "shortUrl": "http://localhost:8000/abc123",
-  "originalUrl": "https://example.com",
+  "short_url": "http://localhost:8000/abc123",
   "slug": "abc123",
-  "createdAt": "2024-01-01T00:00:00.000Z",
-  "expiresAt": null
+  "url": "https://example.com"
 }
 ```
 

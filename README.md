@@ -21,9 +21,12 @@ and ease of development.
 - **Monorepo Architecture:** Centralized management with pnpm workspaces and Turborepo
 - **Type-Safe:** Fully written in TypeScript with shared types package
 - **NestJS Backend:** Scalable REST API with TypeORM, PostgreSQL, and Swagger documentation
+- **URL Shortening:** Complete API endpoints for shortening, resolving, and redirecting URLs
+- **Database Integration:** PostgreSQL with TypeORM entities and migrations
 - **Health Monitoring:** Built-in health check endpoints for production monitoring
 - **Modern Tooling:** ESLint flat config, Prettier, and automated code quality checks
-- **Development Ready:** Hot reloading, environment configuration, and comprehensive testing setup
+- **Testing Framework:** Jest setup with unit and integration tests
+- **Development Ready:** Hot reloading, environment configuration, and Docker support
 
 ## Getting Started
 
@@ -69,14 +72,25 @@ execution.
 To run just the backend NestJS server:
 
 ```bash
-pnpm --filter backend start:dev
+pnpm dev:backend
 ```
 
 The backend will be available at:
 
-- **API**: http://localhost:3000
-- **Swagger Documentation**: http://localhost:3000/api
-- **Health Check**: http://localhost:3000/health
+- **API**: http://localhost:8000
+- **Swagger Documentation**: http://localhost:8000/api
+- **Health Check**: http://localhost:8000/health
+
+#### Database Setup
+
+Start the PostgreSQL database using Docker:
+
+```bash
+pnpm docker:up
+```
+
+The database will be available at `localhost:5432` with the credentials defined in
+`docker-compose.yml`.
 
 ## Project Structure
 
@@ -88,16 +102,26 @@ The monorepo is structured as follows:
 │   ├── backend/        # NestJS API (✅ Implemented)
 │   │   ├── src/
 │   │   │   ├── health/ # Health check module
-│   │   │   └── ...     # App structure with controllers, services
+│   │   │   ├── link/   # URL shortening module
+│   │   │   │   ├── dto/         # Data transfer objects
+│   │   │   │   ├── entities/    # TypeORM entities
+│   │   │   │   ├── link.controller.ts
+│   │   │   │   ├── link.service.ts
+│   │   │   │   └── link.module.ts
+│   │   │   └── main.ts
 │   │   └── package.json
 │   └── frontend/       # Next.js Web App (Planned)
 ├── packages/
-│   ├── types/          # Shared TypeScript types (✅ Basic structure)
-│   │   ├── src/api.ts  # API request/response types
-│   │   └── src/index.ts
+│   ├── types/          # Shared TypeScript types (✅ Implemented)
+│   │   ├── src/
+│   │   │   ├── api.ts       # API request/response types
+│   │   │   ├── entities/    # Entity types
+│   │   │   └── index.ts
+│   │   └── package.json
 │   ├── ui/             # Shared React components (Planned)
 │   └── react/          # React hooks for API interaction (Planned)
 ├── ai-agent/           # Project planning and documentation
+├── docker-compose.yml  # PostgreSQL database setup
 └── turbo.json          # Turborepo configuration
 ```
 
@@ -122,7 +146,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [x] **1.1.6** Create directory structure (apps/, packages/, docs/)
 - [x] **1.1.7** Set up .gitignore and basic README _(includes contributing guidelines)_
 
-### Phase 2: Backend API Development 🎯 CURRENT FOCUS
+### Phase 2: Backend API Development ✅ COMPLETED
 
 - [x] **2.1.1** Initialize NestJS app in apps/backend with CLI
 - [x] **2.1.2** Install backend dependencies (NestJS, TypeORM, PostgreSQL driver, nestjs-zod)
@@ -131,9 +155,12 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [x] **2.1.5** Set up TypeORM configuration with PostgreSQL connection
 - [x] **2.1.6** Create basic app structure (modules, controllers, services)
 - [x] **2.1.7** Implement health check endpoint (/health) with dedicated module
-- [ ] **2.1.8** Set up logging configuration with structured logging
-- [ ] **2.2.1** Create Link entity with TypeORM decorators
-- [ ] **2.2.3** Set up database migrations
+- [x] **2.2.1** Create Link entity with TypeORM decorators
+- [x] **2.2.3** Set up database migrations
+- [x] **2.4.1** Implement POST /shorten endpoint with validation
+- [x] **2.4.2** Implement GET /:slug redirect handler
+- [x] **2.4.3** Implement POST /unshorten endpoint
+- [x] **2.6.1** Set up Jest testing framework
 
 ### Phase 3: Frontend Development (Next Phase)
 
