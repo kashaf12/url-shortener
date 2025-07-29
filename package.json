@@ -4,8 +4,10 @@
   "description": "A URL shortener platform built as a monorepo",
   "private": true,
   "scripts": {
+    "clean": "turbo run clean",
     "dev": "turbo run dev",
     "dev:backend": "pnpm docker:up && pnpm --filter backend run start:dev",
+    "prod:backend": "pnpm --filter backend run start:prod",
     "dev:frontend": "pnpm docker:up && pnpm --filter frontend run dev",
     "start:backend": "pnpm --filter backend run start",
     "start:frontend": "pnpm --filter frontend run start",
@@ -42,6 +44,7 @@
     "jiti": "^2.5.1",
     "lint-staged": "^16.1.2",
     "prettier": "3.6.2",
+    "supabase": "^2.33.5",
     "turbo": "^2.5.5",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0"

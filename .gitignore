@@ -11,3 +11,5 @@ coverage
 repopack-output.txt
 .env
 *.log
+frontend-ignore
+out
