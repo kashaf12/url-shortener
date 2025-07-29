@@ -5,33 +5,37 @@
   "private": true,
   "scripts": {
     "clean": "turbo run clean",
-    "dev": "turbo run dev",
-    "dev:backend": "pnpm docker:up && pnpm --filter backend run start:dev",
-    "prod:backend": "pnpm --filter backend run start:prod",
-    "dev:frontend": "pnpm docker:up && pnpm --filter frontend run dev",
-    "start:backend": "pnpm --filter backend run start",
-    "start:frontend": "pnpm --filter frontend run start",
-    "docker:up": "docker compose up -d postgres",
-    "docker:down": "docker compose down",
     "build": "turbo run build",
+    "dev": "turbo run dev",
     "test": "turbo run test",
     "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "dev:backend": "pnpm supabase:start && pnpm --filter backend run start:dev",
+    "start:backend": "pnpm --filter backend run start",
+    "prod:backend": "pnpm --filter backend run start:prod",
+    "dev:frontend": "docker-compose -f docker-compose.dev.yml up --build",
+    "start:frontend": "pnpm --filter frontend run start",
     "lint:root": "eslint . --fix",
+    "type-check:root": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "type-check": "turbo run type-check",
-    "type-check:root": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
   "keywords": [
     "url-shortener",
     "monorepo",
     "nextjs",
-    "nestjs"
+    "nestjs",
+    "supabase"
   ],
-  "author": "",
   "license": "MIT",
   "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@eslint/json": "^0.13.1",
