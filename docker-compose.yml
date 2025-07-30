@@ -1,29 +1,12 @@
 version: "3.8"
 
 services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: url-shortener-postgres
-    restart: unless-stopped
-    ports:
-      - "5432:5432"
-    env_file:
-      - .env.docker
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
   backend:
     build:
       context: .
       dockerfile: apps/backend/Dockerfile
-    ports:
-      - '8000:8000'
     env_file:
-      - ./apps/backend/.env
-
-volumes:
-  postgres_data:
+      - .env
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

@@ -2,18 +2,44 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "envMode": "strict",
-  "globalDependencies": [".env", ".env.*", "tsconfig.json"],
+  "globalDependencies": [
+    ".env",
+    ".env.*",
+    "tsconfig.json",
+    "tsconfig.base.json"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"],
+      "env": [
+        "NODE_ENV",
+        "PORT",
+        "POSTGRES_DB",
+        "POSTGRES_USER",
+        "DATABASE_URI",
+        "POSTGRES_PASSWORD",
+        "POSTGRES_HOST",
+        "POSTGRES_PORT",
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "SUPABASE_JWT_SECRET",
+        "BASE_URL",
+        "SERVICE_NAME",
+        "LOGGER_SILENT",
+        "LOG_LEVEL"
+      ]
     },
-    "start:backend": {
+    "dev": {
       "cache": false,
       "persistent": true
     },
-    "dev": {
+    "dev:backend": {
+      "cache": false,
+      "persistent": true
+    },
+    "start:backend": {
       "cache": false,
       "persistent": true
     },
@@ -22,20 +48,27 @@
       "persistent": true
     },
     "docker:down": {
-      "cache": false,
-      "persistent": true
+      "cache": false
     },
     "lint": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "outputs": []
     },
     "type-check": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "outputs": []
     },
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
     "clean": {
+      "cache": false
+    },
+    "format": {
+      "cache": false
+    },
+    "format:check": {
       "cache": false
     }
   }
