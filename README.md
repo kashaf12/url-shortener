@@ -82,9 +82,9 @@ pnpm dev:backend
 
 The backend will be available at:
 
-- **API**: http://localhost:8000/v1
-- **Swagger Documentation**: http://localhost:8000/v1/docs
-- **Health Check**: http://localhost:8000/v1/health
+- **API**: http://localhost:8000
+- **Swagger Documentation**: http://localhost:8000/docs
+- **Health Check**: http://localhost:8000/health
 
 #### Frontend Development
 
@@ -157,14 +157,14 @@ Once the backend is running, the following endpoints are available:
 
 ### URL Shortening
 
-- `POST /v1/shorten` - Create a short URL
-- `POST /v1/unshorten` - Get original URL from slug
-- `GET /v1/:slug` - Redirect to original URL
+- `POST /shorten` - Create a short URL
+- `POST /unshorten` - Get original URL from slug
+- `GET /:slug` - Redirect to original URL
 
 ### Health & Documentation
 
-- `GET /v1/health` - Health check endpoint
-- `GET /v1/docs` - Swagger API documentation
+- `GET /health` - Health check endpoint
+- `GET /docs` - Swagger API documentation
 
 ## Development Status
 

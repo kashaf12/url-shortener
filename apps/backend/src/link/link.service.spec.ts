@@ -73,7 +73,7 @@ describe("LinkService", () => {
       const result = await service.shorten(dto);
 
       expect(result).toEqual({
-        short_url: `http://localhost:8000/v1/${mockSlug}`,
+        short_url: `http://localhost:8000/${mockSlug}`,
         slug: mockSlug,
         url: dto.url,
       });
@@ -81,7 +81,7 @@ describe("LinkService", () => {
       expect(linkRepository.create).toHaveBeenCalledWith(mockEntity);
       expect(linkRepository.save).toHaveBeenCalledWith(mockEntity);
       expect(configService.get).toHaveBeenCalledWith(
-        "BASE_URL",
+        "HOST",
         "http://localhost:8000"
       );
     });

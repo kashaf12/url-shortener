@@ -41,7 +41,7 @@ A modern, responsive URL shortener frontend built with Next.js 14+ and shadcn/ui
    Configure the following variables:
 
    ```env
-   NEXT_PUBLIC_API_URL=http://localhost:8000/v1
+   NEXT_PUBLIC_API_URL=http://localhost:8000
    ```
 
 3. **Run the development server:**
@@ -57,16 +57,16 @@ A modern, responsive URL shortener frontend built with Next.js 14+ and shadcn/ui
 
 ### Required Variables
 
-| Variable              | Description          | Example                    |
-| --------------------- | -------------------- | -------------------------- |
-| `NEXT_PUBLIC_API_URL` | Backend API base URL | `http://localhost:8000/v1` |
+| Variable              | Description          | Example                 |
+| --------------------- | -------------------- | ----------------------- |
+| `NEXT_PUBLIC_API_URL` | Backend API base URL | `http://localhost:8000` |
 
 ### Production Variables
 
 For production deployment on Vercel:
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-backend-api.com/v1
+NEXT_PUBLIC_API_URL=https://your-backend-api.com
 ```
 
 ## Project Structure

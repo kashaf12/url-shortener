@@ -25,7 +25,7 @@
         "SUPABASE_URL",
         "SUPABASE_SERVICE_ROLE_KEY",
         "SUPABASE_JWT_SECRET",
-        "BASE_URL",
+        "HOST",
         "SERVICE_NAME",
         "LOGGER_SILENT",
         "LOG_LEVEL"
@@ -50,7 +50,7 @@
         "SUPABASE_URL",
         "SUPABASE_SERVICE_ROLE_KEY",
         "SUPABASE_JWT_SECRET",
-        "BASE_URL",
+        "HOST",
         "SERVICE_NAME",
         "LOGGER_SILENT",
         "LOG_LEVEL"
@@ -72,7 +72,7 @@
         "SUPABASE_URL",
         "SUPABASE_SERVICE_ROLE_KEY",
         "SUPABASE_JWT_SECRET",
-        "BASE_URL",
+        "HOST",
         "SERVICE_NAME",
         "LOGGER_SILENT",
         "LOG_LEVEL"

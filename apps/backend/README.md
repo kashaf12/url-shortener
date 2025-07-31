@@ -55,11 +55,11 @@ docker run --name postgres \
 
 ## API Endpoints
 
-- `POST /v1/shorten` - Create short URL
-- `GET /v1/:slug` - Redirect to original URL (with click tracking)
-- `POST /v1/unshorten` - Get original URL and metadata
-- `GET /v1/health` - Health check
-- `GET /v1/docs` - Swagger documentation
+- `POST /shorten` - Create short URL
+- `GET /:slug` - Redirect to original URL (with click tracking)
+- `POST /unshorten` - Get original URL and metadata
+- `GET /health` - Health check
+- `GET /docs` - Swagger documentation
 
 **Base URL:** http://localhost:8000
 
@@ -105,7 +105,7 @@ pnpm format                 # Format code
 ### Shorten URL
 
 ```bash
-curl -X POST http://localhost:8000/v1/shorten \
+curl -X POST http://localhost:8000/shorten \
   -H "Content-Type: application/json" \
   -d '{"url": "https://example.com"}'
 ```
@@ -114,7 +114,7 @@ Response:
 
 ```json
 {
-  "short_url": "http://localhost:8000/v1/abc123",
+  "short_url": "http://localhost:8000/abc123",
   "slug": "abc123",
   "original_url": "https://example.com",
   "created_at": "2025-01-27T10:30:00.000Z"
@@ -124,7 +124,7 @@ Response:
 ### Get Original URL
 
 ```bash
-curl -X POST http://localhost:8000/v1/unshorten \
+curl -X POST http://localhost:8000/unshorten \
   -H "Content-Type: application/json" \
   -d '{"slug": "abc123"}'
 ```
@@ -222,5 +222,5 @@ Log files (production only):
 ## Documentation
 
 - [Monorepo Setup](../../README.md)
-- [API Documentation](http://localhost:8000/v1/docs) (when running)
+- [API Documentation](http://localhost:8000/docs) (when running)
 - [Shared Types](../../packages/types/README.md)

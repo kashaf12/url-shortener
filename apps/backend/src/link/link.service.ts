@@ -47,7 +47,7 @@ export class LinkService {
       });
 
       return {
-        short_url: `${this.configService.get("BASE_URL", "http://localhost:8000")}/v1/${savedLink.slug}`,
+        short_url: `${this.configService.get("HOST", "http://localhost:8000")}/${savedLink.slug}`,
         slug: savedLink.slug,
         url: savedLink.url,
       };

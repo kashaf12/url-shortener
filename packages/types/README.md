@@ -125,7 +125,7 @@ import { Body, Controller, Post } from "@nestjs/common";
 import { ZodValidationPipe } from "nestjs-zod";
 import { ShortenRequest, ShortenRequestSchema } from "@url-shortener/types";
 
-@Controller("v1")
+@Controller()
 export class LinkController {
   @Post("shorten")
   async shorten(

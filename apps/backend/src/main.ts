@@ -16,12 +16,13 @@ async function bootstrap() {
   app.enableCors();
 
   // Set global prefix for API routes
-  app.setGlobalPrefix("v1");
+  // app.setGlobalPrefix("v1");
 
   setupSwagger(app);
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>("PORT", 8000);
+  const host = configService.get<string>("HOST", "http://localhost:8000");
 
   await app.listen(port);
   winstonLogger.log(
@@ -29,13 +30,7 @@ async function bootstrap() {
     "Bootstrap"
   );
 
-  winstonLogger.log(
-    `🚀 Application is running on: http://localhost:${port}/v1`,
-    "Bootstrap"
-  );
-  winstonLogger.log(
-    `📚 API Documentation: http://localhost:${port}/v1/docs`,
-    "Bootstrap"
-  );
+  winstonLogger.log(`🚀 Application is running on: ${host}`, "Bootstrap");
+  winstonLogger.log(`📚 API Documentation: ${host}/docs`, "Bootstrap");
 }
 void bootstrap();
