@@ -26,17 +26,28 @@ import { RequestLoggerMiddleware } from "./middleware/request-logger.middleware"
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: "postgres",
-        host: configService.get("POSTGRES_HOST", "localhost"),
-        port: configService.get("POSTGRES_PORT", 5432),
-        username: configService.get("POSTGRES_USER", "postgres"),
-        password: configService.get("POSTGRES_PASSWORD", "password"),
-        database: configService.get("POSTGRES_DB", "url_shortener"),
-        entities: [Link],
-        synchronize: configService.get("NODE_ENV") !== "production",
-        logging: configService.get("NODE_ENV") === "development",
-      }),
+      useFactory: (configService: ConfigService) => {
+        console.log(configService.get("POSTGRES_HOST", "localhost"));
+        console.log(configService.get("POSTGRES_PORT", 5432));
+        console.log(configService.get("POSTGRES_USER", "postgres"));
+        console.log(configService.get("POSTGRES_PASSWORD", "password"));
+        console.log(configService.get("POSTGRES_DB", "url_shortener"));
+        console.log(configService.get("NODE_ENV", "development"));
+        console.log(configService.get("HOST", "http://localhost:8000"));
+        console.log(configService.get("PORT", 8000));
+
+        return {
+          type: "postgres",
+          host: configService.get("POSTGRES_HOST", "localhost"),
+          port: configService.get("POSTGRES_PORT", 5432),
+          username: configService.get("POSTGRES_USER", "postgres"),
+          password: configService.get("POSTGRES_PASSWORD", "password"),
+          database: configService.get("POSTGRES_DB", "url_shortener"),
+          entities: [Link],
+          synchronize: configService.get("NODE_ENV") !== "production",
+          logging: configService.get("NODE_ENV") === "development",
+        };
+      },
       inject: [ConfigService],
     }),
     HealthModule,
