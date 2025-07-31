@@ -26,7 +26,7 @@
     "build:backend-image": "docker build -f apps/backend/Dockerfile -t url-shortener-backend .",
     "dev:stack": "pnpm supabase:start && docker compose up --build -d",
     "stop:stack": "docker compose down && pnpm supabase:stop",
-    "start:backend-docker": "docker run -d --env-file=.env -p 8000:8000 url-shortener-backend"
+    "start:backend-docker": "docker run -d --env-file=.env.docker -p 8000:8000 url-shortener-backend"
   },
   "keywords": [
     "url-shortener",

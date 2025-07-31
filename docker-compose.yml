@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: apps/backend/Dockerfile
     env_file:
-      - .env
+      - .env.docker
     ports:
       - "8000:8000"
     restart: unless-stopped
