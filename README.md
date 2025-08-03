@@ -12,9 +12,16 @@
   </a>
 </p>
 
-This project is a modern, high-performance URL shortener platform built with a monorepo architecture
-using Turborepo. It features a Next.js frontend, a NestJS backend, and is designed for scalability
-and ease of development.
+**URL Shortener Platform** is a production-ready, developer-first URL shortening solution built for
+modern web applications. Designed as a complete monorepo with **NestJS backend**, **Next.js
+frontend**, and **Supabase** integration, it offers both a powerful REST API and ready-to-use React
+components for seamless integration. With automatic CI/CD deployment to **Render** and **Vercel**,
+comprehensive TypeScript support, and enterprise-grade features like analytics, rate limiting, and
+security validation, this platform serves as both a standalone service and a foundation for building
+custom URL management solutions. Whether you're a startup needing quick URL shortening or an
+enterprise requiring scalable, self-hosted infrastructure, this platform provides the complete
+toolkit with production deployments, local development workflows, and extensive documentation to get
+you from zero to production in minutes.
 
 ## 🚀 Live Demo
 
