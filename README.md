@@ -37,8 +37,9 @@ and ease of development.
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/) (v18 or higher)
-- [pnpm](https://pnpm.io/)
+- [Node.js](https://nodejs.org/en/) (v20 or higher)
+- [pnpm](https://pnpm.io/) (v9.0.0 or higher)
+- [Supabase CLI](https://supabase.com/docs/guides/cli) (for local development)
 
 ### Installation
 
@@ -55,7 +56,14 @@ and ease of development.
     pnpm install
     ```
 
-3.  **Build the packages:**
+3.  **Set up Supabase for local development:**
+
+    ```bash
+    # Start Supabase local development stack
+    pnpm supabase:start
+    ```
+
+4.  **Build the packages:**
 
     ```bash
     pnpm build
@@ -101,23 +109,33 @@ The frontend will be available at:
 
 #### Database Setup
 
-Start the PostgreSQL database using Docker:
+Supabase handles the database automatically when you run:
 
 ```bash
-pnpm docker:up
+pnpm supabase:start
 ```
 
-The database will be available at `localhost:5432` with the credentials defined in
-`docker-compose.yml`.
+This will start the Supabase local development stack including:
+
+- PostgreSQL database on `localhost:54322`
+- Supabase Studio on `localhost:54323`
+- Auth server and other Supabase services
+
+To stop the Supabase stack:
+
+```bash
+pnpm supabase:stop
+```
 
 ### Available Scripts
 
 - `pnpm dev` - Start all development servers
 - `pnpm dev:frontend` - Start frontend only
-- `pnpm dev:backend` - Start backend with database
+- `pnpm dev:backend` - Start backend with Supabase
 - `pnpm start:backend` - Start backend only
-- `pnpm docker:up` - Start PostgreSQL database
-- `pnpm docker:down` - Stop PostgreSQL database
+- `pnpm supabase:start` - Start Supabase local development stack
+- `pnpm supabase:stop` - Stop Supabase local development stack
+- `pnpm supabase:status` - Check Supabase services status
 - `pnpm build` - Build all packages
 - `pnpm test` - Run all tests
 - `pnpm lint` - Run linting
@@ -138,7 +156,7 @@ The monorepo is structured as follows:
 │   ├── ui/             # Shared React components (Planned)
 │   └── react/          # React hooks for API interaction (Planned)
 ├── ai-agent/           # Project planning and documentation
-├── docker-compose.yml  # PostgreSQL database setup
+├── supabase/           # Supabase configuration and migrations
 └── turbo.json          # Turborepo configuration
 ```
 
@@ -171,14 +189,15 @@ Once the backend is running, the following endpoints are available:
 ### ✅ Completed
 
 - Monorepo setup with pnpm workspaces and Turborepo
-- NestJS backend with TypeORM and PostgreSQL
+- NestJS backend with TypeORM and Supabase PostgreSQL
 - Complete API endpoints for URL shortening
 - Swagger documentation
 - Jest testing framework (10 tests passing)
 - Shared TypeScript types package
-- Docker setup for PostgreSQL
+- Supabase local development setup
 - **Next.js frontend application with shadcn/ui**
 - **Frontend deployed to Vercel**
+- **Backend deployed to Render with CI/CD**
 
 ### 🚧 In Progress
 
@@ -197,12 +216,22 @@ This project is being developed by [Kashaf Ahmed](https://github.com/kashaf12).
 
 **Key Technologies:**
 
-- **Monorepo:** Turborepo
-- **Frontend:** Next.js (React)
-- **Backend:** NestJS (Node.js)
+- **Monorepo:** Turborepo + pnpm workspaces
+- **Frontend:** Next.js (React) + shadcn/ui
+- **Backend:** NestJS (Node.js) + TypeORM
+- **Database:** Supabase PostgreSQL
+- **Deployment:** Vercel (Frontend) + Render (Backend)
 - **Package Manager:** pnpm
 - **Linting:** ESLint
 - **Formatting:** Prettier
 - **Git Hooks:** Husky
 
 Feel free to contribute or provide feedback!
+
+---
+
+## Last Updated
+
+**Date:** January 2025  
+**Version:** 1.0.0  
+**Architecture:** Supabase + Render + Vercel

@@ -1,14 +1,14 @@
 # URL Shortener Backend
 
-A NestJS API service for URL shortening with PostgreSQL database, part of the URL Shortener
-monorepo.
+A NestJS API service for URL shortening with Supabase PostgreSQL database, deployed on Render with
+automatic CI/CD. Part of the URL Shortener monorepo.
 
 ## Features
 
 - ✅ Fast URL shortening and redirection
 - ✅ Click tracking and analytics
 - ✅ Swagger API documentation
-- ✅ PostgreSQL with TypeORM
+- ✅ Supabase PostgreSQL with TypeORM
 - ✅ Jest testing framework
 - ✅ Input validation with Zod
 - ✅ Structured logging with Winston
@@ -20,8 +20,8 @@ monorepo.
 
 ### Prerequisites
 
-- Node.js 18+
-- PostgreSQL
+- Node.js 20+
+- [Supabase CLI](https://supabase.com/docs/guides/cli)
 - pnpm
 
 ### Development
@@ -43,15 +43,21 @@ monorepo.
 ### Database Setup
 
 ```bash
-# Start PostgreSQL with Docker (from root)
-pnpm docker:up
+# Start Supabase local development stack (from root)
+pnpm supabase:start
 
-# Or manually:
-docker run --name postgres \
-  -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=url_shortener \
-  -p 5432:5432 -d postgres:14
+# Check Supabase services status
+pnpm supabase:status
+
+# Stop Supabase stack when done
+pnpm supabase:stop
 ```
+
+This will start:
+
+- PostgreSQL database on `localhost:54322`
+- Supabase Studio (web interface) on `localhost:5432`
+- Authentication server and other Supabase services
 
 ## API Endpoints
 
@@ -61,21 +67,49 @@ docker run --name postgres \
 - `GET /health` - Health check
 - `GET /docs` - Swagger documentation
 
-**Base URL:** http://localhost:8000
+**Local Development:** http://localhost:8000  
+**Production:** https://url-shortener-but7.onrender.com
 
 ## Environment Variables
 
-Create `.env` file:
+### Local Development
+
+Create `.env` file for local Supabase:
 
 ```bash
 PORT=8000
+# Supabase Local Development
 DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_NAME=url_shortener
+DATABASE_PORT=54322
+DATABASE_NAME=postgres
 DATABASE_USERNAME=postgres
 DATABASE_PASSWORD=postgres
+# Supabase URLs (when using hosted Supabase)
+SUPABASE_URL=your-project-url.supabase.co
+SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+# Application Settings
 BASE_URL=http://localhost:8000
 LOG_LEVEL=debug
+SERVICE_NAME=url-shortener-api
+```
+
+### Production (Render)
+
+Configure these environment variables in your Render dashboard:
+
+```bash
+PORT=8000
+DATABASE_HOST=your-supabase-host
+DATABASE_PORT=5432
+DATABASE_NAME=postgres
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=your-supabase-password
+SUPABASE_URL=your-project-url.supabase.co
+SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+BASE_URL=https://your-render-app.onrender.com
+LOG_LEVEL=info
 SERVICE_NAME=url-shortener-api
 ```
 
@@ -206,9 +240,10 @@ Log files (production only):
 
 **Database connection issues:**
 
-- Ensure PostgreSQL is running on port 5432
+- Ensure Supabase is running: `pnpm supabase:status`
 - Check `.env` file configuration
-- Verify database `url_shortener` exists
+- Verify Supabase local development stack is started: `pnpm supabase:start`
+- For production: Check Supabase project settings and connection string
 
 **Port conflicts:**
 
@@ -219,8 +254,39 @@ Log files (production only):
 
 - Ensure shared types are built: `pnpm build --filter @url-shortener/types`
 
+## Deployment
+
+### Render Deployment (Production)
+
+The backend is automatically deployed to Render with CI/CD configured:
+
+1. **Automatic Deployment**: Push to `main` branch triggers deployment
+2. **Production URL**: https://url-shortener-but7.onrender.com
+3. **Environment Variables**: Configure in Render dashboard
+4. **Health Check**: Render monitors `/health` endpoint
+
+### Manual Deployment Steps
+
+1. **Connect GitHub**: Link your repository to Render
+2. **Configure Build**:
+   - Build Command: `cd apps/backend && pnpm install && pnpm build`
+   - Start Command: `cd apps/backend && pnpm start:prod`
+3. **Set Environment Variables**: Add production environment variables
+4. **Deploy**: Render will automatically build and deploy
+
 ## Documentation
 
 - [Monorepo Setup](../../README.md)
-- [API Documentation](http://localhost:8000/docs) (when running)
+- [API Documentation (Local)](http://localhost:8000/docs)
+- [API Documentation (Production)](https://url-shortener-but7.onrender.com/docs)
 - [Shared Types](../../packages/types/README.md)
+- [Supabase Local Development](https://supabase.com/docs/guides/local-development)
+
+---
+
+## Last Updated
+
+**Date:** January 2025  
+**Version:** 1.0.0  
+**Deployment:** Render + Supabase  
+**Status:** Production Ready
