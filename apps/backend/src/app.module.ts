@@ -6,7 +6,9 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { HealthModule } from "./health/health.module";
 import { LinkModule } from "./link/link.module";
+import { SlugModule } from "./slug/slug.module";
 import { Link } from "./link/entities/link.entity";
+import { SlugSpaceUsage } from "./slug/entities/slug-space-usage.entity";
 import { APP_PIPE } from "@nestjs/core";
 import { ZodValidationPipe } from "nestjs-zod";
 import { createLoggerConfig } from "./config/logger.config";
@@ -33,14 +35,15 @@ import { RequestLoggerMiddleware } from "./middleware/request-logger.middleware"
         username: configService.get("POSTGRES_USER", "postgres"),
         password: configService.get("POSTGRES_PASSWORD", "password"),
         database: configService.get("POSTGRES_DB", "url_shortener"),
-        entities: [Link],
+        entities: [Link, SlugSpaceUsage],
         synchronize: configService.get("NODE_ENV") !== "production",
-        logging: configService.get("NODE_ENV") === "development",
+        // logging: configService.get("NODE_ENV") === "development",
       }),
       inject: [ConfigService],
     }),
     HealthModule,
-    LinkModule,
+    SlugModule,
+    LinkModule, // make sure it's at last
   ],
   controllers: [AppController],
   providers: [

@@ -25,12 +25,12 @@ async function bootstrap() {
   const host = configService.get<string>("HOST", "http://localhost:8000");
 
   await app.listen(port);
-  winstonLogger.log(
+  console.log(
     `🌍 Application is running in ${configService.get("NODE_ENV")} mode`,
     "Bootstrap"
   );
 
-  winstonLogger.log(`🚀 Application is running on: ${host}`, "Bootstrap");
-  winstonLogger.log(`📚 API Documentation: ${host}/docs`, "Bootstrap");
+  console.log(`🚀 Application is running on: ${host}`, "Bootstrap");
+  console.log(`📚 API Documentation: ${host}/docs`, "Bootstrap");
 }
 void bootstrap();
