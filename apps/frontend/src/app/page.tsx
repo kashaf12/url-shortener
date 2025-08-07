@@ -38,8 +38,6 @@ import {
 import { useInView } from "react-intersection-observer";
 
 export default function Home() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   const [mounted, setMounted] = useState(false);
 
   const { ref: heroRef, inView: heroInView } = useInView({
@@ -71,19 +69,11 @@ export default function Home() {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header />
       <main className="flex-1">
-        {/* Hero Section with Video Background */}
+        {/* Hero Section with Gradient Background */}
         <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
-          {/* Video Background */}
-          <div className="absolute inset-0 z-0">
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 video-overlay" />
+          {/* Gradient Background */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-br from-background via-muted/20 to-background">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/10" />
           </div>
 
           {/* Hero Content */}

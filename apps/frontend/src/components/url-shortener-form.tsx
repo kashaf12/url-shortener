@@ -29,21 +29,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
-
-interface ShortenedUrl {
-  short_url: string;
-  slug: string;
-  url: string;
-  metadata: {
-    title?: string;
-    tags?: string[];
-    user_name?: string;
-    source?: string;
-  };
-  created_at: string;
-  is_duplicate: boolean;
-  click_count: number;
-}
+import { apiService } from "@/lib/api";
+import type { ShortenResponse, LinkMetadata } from "@url-shortener/types";
 
 export function UrlShortenerForm() {
   const [url, setUrl] = useState("");
@@ -53,7 +40,7 @@ export function UrlShortenerForm() {
   const [source, setSource] = useState("");
   const [deduplicate, setDeduplicate] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<ShortenedUrl | null>(null);
+  const [result, setResult] = useState<ShortenResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
@@ -84,32 +71,35 @@ export function UrlShortenerForm() {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const metadata: LinkMetadata = {};
+      if (title) metadata.title = title;
+      if (tags) metadata.tags = tags.split(",").map(tag => tag.trim());
+      if (source) metadata.source = source;
+      metadata.user_name = "demo_user";
 
-      const mockResult: ShortenedUrl = {
-        short_url: `https://short.ly/${customSlug || Math.random().toString(36).substring(2, 8)}`,
-        slug: customSlug || Math.random().toString(36).substring(2, 8),
+      const requestData = {
         url: url,
-        metadata: {
-          title: title || undefined,
-          tags: tags ? tags.split(",").map(tag => tag.trim()) : undefined,
-          source: source || undefined,
-          user_name: "demo_user",
-        },
-        created_at: new Date().toISOString(),
-        is_duplicate: deduplicate && Math.random() > 0.7,
-        click_count: Math.floor(Math.random() * 100),
+        customSlug: customSlug || undefined,
+        metadata,
+        deduplicate: deduplicate,
+        enhancedCanonical: false,
       };
 
-      setResult(mockResult);
+      const apiResult = await apiService.shorten(requestData);
+      setResult(apiResult);
+
       toast("URL shortened successfully!", {
-        description: mockResult.is_duplicate
+        description: apiResult.wasDeduped
           ? "Existing short URL returned"
           : "New short URL created",
       });
     } catch (err) {
-      setError("Failed to shorten URL. Please try again.");
+      console.error("API Error:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to shorten URL. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -368,7 +358,7 @@ export function UrlShortenerForm() {
                 <Check className="h-5 w-5" />
               </div>
               URL Shortened Successfully!
-              {result.is_duplicate && (
+              {result.wasDeduped && (
                 <Badge variant="secondary" className="ml-2">
                   Duplicate
                 </Badge>
@@ -436,46 +426,36 @@ export function UrlShortenerForm() {
               </div>
             </div>
 
-            {/* Metadata */}
-            {(result.metadata.title ||
-              result.metadata.tags ||
-              result.metadata.source) && (
+            {/* Additional Info */}
+            {(result.strategy || result.length || result.wasCustomSlug) && (
               <div className="space-y-3">
-                <Label className="text-sm font-medium">Metadata</Label>
+                <Label className="text-sm font-medium">Additional Info</Label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-lg bg-muted/50">
-                  {result.metadata.title && (
+                  {result.strategy && (
                     <div>
                       <p className="text-xs text-muted-foreground mb-1">
-                        Title
+                        Strategy
+                      </p>
+                      <p className="text-sm font-medium">{result.strategy}</p>
+                    </div>
+                  )}
+                  {result.length && (
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Length
                       </p>
                       <p className="text-sm font-medium">
-                        {result.metadata.title}
+                        {result.length} characters
                       </p>
                     </div>
                   )}
-                  {result.metadata.tags && (
-                    <div>
-                      <p className="text-xs text-muted-foreground mb-1">Tags</p>
-                      <div className="flex flex-wrap gap-1">
-                        {result.metadata.tags.map((tag, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="text-xs"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {result.metadata.source && (
+                  {result.wasCustomSlug && (
                     <div>
                       <p className="text-xs text-muted-foreground mb-1">
-                        Source
+                        Custom Slug
                       </p>
-                      <p className="text-sm font-medium">
-                        {result.metadata.source}
+                      <p className="text-sm font-medium text-green-600">
+                        ✓ Used custom slug
                       </p>
                     </div>
                   )}
@@ -484,13 +464,7 @@ export function UrlShortenerForm() {
             )}
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center p-4 rounded-lg bg-muted/50">
-                <p className="text-2xl font-bold text-primary">
-                  {result.click_count}
-                </p>
-                <p className="text-xs text-muted-foreground">Total Clicks</p>
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="text-center p-4 rounded-lg bg-muted/50">
                 <p className="text-2xl font-bold text-primary">
                   {result.slug.length}
@@ -499,15 +473,15 @@ export function UrlShortenerForm() {
               </div>
               <div className="text-center p-4 rounded-lg bg-muted/50">
                 <p className="text-2xl font-bold text-primary">
-                  {result.is_duplicate ? "Yes" : "No"}
+                  {result.wasDeduped ? "Yes" : "No"}
                 </p>
                 <p className="text-xs text-muted-foreground">Duplicate</p>
               </div>
               <div className="text-center p-4 rounded-lg bg-muted/50">
                 <p className="text-2xl font-bold text-primary">
-                  {new Date(result.created_at).toLocaleDateString()}
+                  {result.wasCustomSlug ? "Yes" : "No"}
                 </p>
-                <p className="text-xs text-muted-foreground">Created</p>
+                <p className="text-xs text-muted-foreground">Custom Slug</p>
               </div>
             </div>
 
