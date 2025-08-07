@@ -1,204 +1,442 @@
-# URL Shortener Frontend
+# Frontend App
 
-A modern, responsive URL shortener frontend built with Next.js 14+ and shadcn/ui components.
-Deployed on Vercel with automatic CI/CD integration.
+Next.js frontend for URL shortener platform with modern UI, real-time analytics, and responsive
+design.
 
-## 🚀 Live Demo
+## 🚀 Quick Start
 
-**Production:**
-[https://url-shortener-frontend-plum.vercel.app/](https://url-shortener-frontend-plum.vercel.app/)
+```bash
+# Development
+pnpm dev
 
-## Features
+# Production
+pnpm build
+pnpm start
 
-- **Modern UI**: Built with shadcn/ui components and Tailwind CSS
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **URL Shortening**: Create short URLs with custom slugs (optional)
-- **URL Analytics**: View click counts and creation dates
-- **Form Validation**: Real-time validation with Zod schemas
-- **Toast Notifications**: User-friendly feedback for all actions
-- **Clipboard Integration**: One-click copying of shortened URLs
+# Tests
+pnpm test
+```
 
-## Getting Started
+## 📁 Project Structure
 
-### Prerequisites
+```bash
+src/
+├── app/                   # Next.js App Router
+│   ├── layout.tsx        # Root layout
+│   ├── page.tsx          # Home page
+│   └── globals.css       # Global styles
+├── components/            # React components
+│   ├── ui/               # shadcn/ui components
+│   ├── header.tsx        # Site header
+│   ├── footer.tsx        # Site footer
+│   ├── url-shortener-form.tsx # Main form component
+│   └── theme-provider.tsx # Theme provider
+├── lib/                  # Utilities and API
+│   ├── api.ts            # API service
+│   └── utils.ts          # Utility functions
+├── context/              # React context
+│   └── auth-context.tsx  # Authentication context
+└── hooks/                # Custom React hooks
+```
 
-- Node.js 20+
-- pnpm (v9.0.0 or higher)
-- Backend API running (local or production)
+## 🎨 Features
 
-### Development
+### Core Functionality
 
-1. **Install dependencies:**
+- **URL Shortening**: Create short URLs with custom slugs
+- **Real-time Updates**: Live updates with optimistic UI
+- **Responsive Design**: Mobile-first responsive layout
+- **Dark/Light Mode**: Theme switching with system preference
 
-   ```bash
-   pnpm install
-   ```
+### Advanced Features
 
-2. **Set up environment variables:**
+- **Type Safety**: Full TypeScript integration with shared types
+- **Form Validation**: Client-side validation with error handling
+- **Loading States**: Skeleton loading and progress indicators
+- **Error Handling**: Comprehensive error messages and recovery
+- **Copy to Clipboard**: One-click copying of shortened URLs
 
-   ```bash
-   cp .env.example .env.local
-   ```
+### UI/UX Features
 
-   Configure the following variables:
+- **Modern Design**: Beautiful UI with shadcn/ui components
+- **Animations**: Smooth transitions and micro-interactions
+- **Accessibility**: WCAG compliant with keyboard navigation
+- **SEO Optimized**: Meta tags, structured data, and sitemap
+- **PWA Ready**: Progressive Web App capabilities
 
-   ```env
-   # For local development (with local backend)
-   NEXT_PUBLIC_API_URL=http://localhost:8000
+### Analytics & Tracking
 
-   # For production backend integration
-   NEXT_PUBLIC_API_URL=https://url-shortener-but7.onrender.com
+- **Click Tracking**: Track URL clicks and analytics
+- **User Analytics**: Anonymous usage analytics
+- **Performance Monitoring**: Core Web Vitals tracking
+- **Error Tracking**: Client-side error reporting
 
-   # Supabase (when auth is implemented)
-   NEXT_PUBLIC_SUPABASE_URL=your-project-url.supabase.co
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-   ```
+## 🛠️ Tech Stack
 
-3. **Run the development server:**
+### Core Technologies
+
+- **Next.js 15**: React framework with App Router
+- **React 19**: Latest React with concurrent features
+- **TypeScript 5**: Type-safe development
+- **Tailwind CSS 4**: Utility-first CSS framework
+
+### UI Components
+
+- **shadcn/ui**: Beautiful, accessible components
+- **Radix UI**: Headless component primitives
+- **Lucide React**: Beautiful icons
+- **Sonner**: Toast notifications
+
+### Development Tools
+
+- **ESLint**: Code linting and formatting
+- **Prettier**: Code formatting
+- **Husky**: Git hooks
+- **Vitest**: Unit testing
+
+## 🔧 Configuration
+
+### Environment Variables
+
+```bash
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:8000
+
+# Analytics (Optional)
+NEXT_PUBLIC_ANALYTICS_ID=your-analytics-id
+
+# Feature Flags
+NEXT_PUBLIC_ENABLE_ANALYTICS=true
+NEXT_PUBLIC_ENABLE_PWA=true
+```
+
+### Next.js Configuration
+
+```typescript
+// next.config.ts
+const nextConfig = {
+  experimental: {
+    appDir: true,
+  },
+  images: {
+    domains: ["localhost", "your-domain.com"],
+  },
+  env: {
+    CUSTOM_KEY: process.env.CUSTOM_KEY,
+  },
+};
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run tests with coverage
+pnpm test:cov
+
+# Run tests in CI mode
+pnpm test:ci
+```
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+```bash
+# Deploy to Vercel
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+### Static Export
+
+```bash
+# Build static files
+pnpm export
+
+# Serve static files
+pnpm start
+```
+
+### Docker
+
+```bash
+# Build Docker image
+docker build -t url-shortener-frontend .
+
+# Run container
+docker run -p 3000:3000 url-shortener-frontend
+```
+
+## 📱 PWA Features
+
+### Service Worker
+
+- **Offline Support**: Cache static assets
+- **Background Sync**: Sync when online
+- **Push Notifications**: Real-time updates
+
+### Manifest
+
+- **App Icons**: Multiple sizes for different devices
+- **Theme Colors**: Consistent branding
+- **Display Mode**: Standalone app experience
+
+## 🎨 Theming
+
+### Color Scheme
+
+```css
+/* Light theme */
+--background: #ffffff --foreground: #171717 --primary: #2563eb --primary-foreground: #ffffff
+  /* Dark theme */ --background: #0a0a0a --foreground: #ededed --primary: #3b82f6
+  --primary-foreground: #ffffff;
+```
+
+### Customization
+
+```typescript
+// components/theme-provider.tsx
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      {children}
+    </NextThemesProvider>
+  )
+}
+```
+
+## 🔧 Development
+
+### Available Scripts
+
+```bash
+# Development
+pnpm dev              # Development server
+pnpm dev:port 3001    # Custom port
+
+# Building
+pnpm build            # Production build
+pnpm build:analyze    # Bundle analysis
+pnpm clean            # Clean build artifacts
+
+# Testing
+pnpm test             # Run all tests
+pnpm test:watch       # Watch mode
+pnpm test:cov         # Coverage report
+pnpm test:ci          # CI mode
+
+# Linting & Formatting
+pnpm lint             # ESLint
+pnpm lint:fix         # Auto-fix
+pnpm format           # Prettier
+pnpm format:check     # Check formatting
+
+# Type Checking
+pnpm type-check       # TypeScript check
+pnpm type-check:watch # Watch mode
+
+# Export
+pnpm export           # Static export
+pnpm start            # Production server
+```
+
+### Development Workflow
+
+1. **Start Development Server**
 
    ```bash
    pnpm dev
    ```
 
-4. **Open your browser:** Open [http://localhost:3000](http://localhost:3000) to see the
-   application.
-
-## Environment Variables
-
-### Local Development
-
-| Variable              | Description          | Example                 |
-| --------------------- | -------------------- | ----------------------- |
-| `NEXT_PUBLIC_API_URL` | Backend API base URL | `http://localhost:8000` |
-
-### Production Variables
-
-For production deployment on Vercel:
-
-| Variable                        | Description            | Example                                   |
-| ------------------------------- | ---------------------- | ----------------------------------------- |
-| `NEXT_PUBLIC_API_URL`           | Production backend URL | `https://url-shortener-but7.onrender.com` |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL   | `https://your-project.supabase.co`        |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key | `your-anon-key`                           |
-
-### Environment Setup
-
-```env
-# .env.local (for local development)
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-local-anon-key
-
-# .env.production (for Vercel deployment)
-NEXT_PUBLIC_API_URL=https://url-shortener-but7.onrender.com
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
-```
-
-## Project Structure
-
-```
-src/
-├── app/                    # Next.js 14+ App Router
-│   ├── page.tsx           # Home page with URL shortener
-│   └── layout.tsx         # Root layout
-├── components/            # React components
-│   ├── ui/               # shadcn/ui components
-│   ├── url-shortener-form.tsx
-│   └── url-list.tsx
-├── lib/                  # Utilities and configurations
-│   ├── utils.ts          # Utility functions
-│   └── validations.ts    # Zod schemas
-└── types/               # TypeScript type definitions
-```
-
-## Available Scripts
-
-- `pnpm dev` - Start development server
-- `pnpm build` - Build for production
-- `pnpm start` - Start production server
-- `pnpm lint` - Run ESLint
-- `pnpm type-check` - Run TypeScript compiler
-
-## Deployment
-
-This application is deployed on [Vercel](https://vercel.com) with automatic CI/CD integration.
-
-### Automatic Deployment (Recommended)
-
-1. **Production**: Automatically deployed when pushing to `main` branch
-2. **Preview**: Branch deployments for pull requests
-3. **Environment Variables**: Configured in Vercel dashboard
-4. **Domain**: Custom domain configured through Vercel
-
-### Manual Deployment
-
-1. **Install Vercel CLI:**
+2. **Run Tests**
 
    ```bash
-   pnpm add -g vercel
+   pnpm test:watch
    ```
 
-2. **Build and deploy:**
+3. **Check Code Quality**
+
+   ```bash
+   pnpm lint
+   pnpm format
+   pnpm type-check
+   ```
+
+4. **Build for Production**
    ```bash
    pnpm build
-   vercel --prod
+   pnpm start
    ```
 
-### Deployment Configuration
+## 📚 API Integration
 
-**Vercel Settings:**
+### API Service
 
-- Build Command: `pnpm build`
-- Output Directory: `.next`
-- Install Command: `pnpm install`
-- Development Command: `pnpm dev`
-
-**Environment Variables (Vercel Dashboard):**
-
-```env
-NEXT_PUBLIC_API_URL=https://url-shortener-but7.onrender.com
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
+```typescript
+// lib/api.ts
+export class ApiService {
+  async shorten(data: ShortenRequest): Promise<ShortenResponse> {
+    return this.request<ShortenResponse>("/shorten", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  }
+}
 ```
 
-## Technologies Used
+### Usage in Components
 
-- **Framework**: Next.js 14+ (App Router)
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
-- **Forms**: React Hook Form with Zod validation
-- **HTTP Client**: Fetch API
-- **Icons**: Lucide React
-- **Toast Notifications**: sonner
+```typescript
+// components/url-shortener-form.tsx
+const handleSubmit = async (data: ShortenRequest) => {
+  try {
+    const result = await apiService.shorten(data);
+    setResult(result);
+  } catch (error) {
+    setError(error.message);
+  }
+};
+```
 
-## Integration with Backend
+## 🎯 Performance
 
-The frontend integrates with the NestJS backend through REST API calls:
+### Optimizations
 
-1. **URL Shortening**: `POST /shorten` endpoint
-2. **URL Resolution**: `POST /unshorten` endpoint
-3. **Redirects**: `GET /:slug` endpoint
-4. **Health Checks**: `GET /health` endpoint
+- **Code Splitting**: Automatic route-based splitting
+- **Image Optimization**: Next.js Image component
+- **Font Optimization**: System fonts with fallbacks
+- **Bundle Analysis**: Webpack bundle analyzer
 
-### API Client Configuration
+### Core Web Vitals
 
-The API client is configured in `src/lib/api.ts` and uses the `NEXT_PUBLIC_API_URL` environment
-variable.
+- **LCP**: < 2.5s (Largest Contentful Paint)
+- **FID**: < 100ms (First Input Delay)
+- **CLS**: < 0.1 (Cumulative Layout Shift)
 
-## Learn More
+### Monitoring
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [shadcn/ui Documentation](https://ui.shadcn.com)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Vercel Deployment](https://vercel.com/docs)
-- [Supabase Frontend Integration](https://supabase.com/docs/guides/with-nextjs)
+```typescript
+// lib/analytics.ts
+export function trackEvent(event: string, properties?: Record<string, any>) {
+  // Analytics implementation
+}
+```
 
----
+## 🔒 Security
 
-## Last Updated
+### Content Security Policy
 
-**Date:** January 2025  
-**Version:** 1.0.0  
-**Deployment:** Vercel + Render Backend  
-**Status:** Production Ready
+```html
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+/>
+```
+
+### Input Validation
+
+```typescript
+// Client-side validation
+const validateUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
+```
+
+### Error Boundaries
+
+```typescript
+// Error boundary component
+export function ErrorBoundary({ children }: { children: React.ReactNode }) {
+  return (
+    <ErrorBoundary fallback={<ErrorFallback />}>
+      {children}
+    </ErrorBoundary>
+  );
+}
+```
+
+## 📊 Analytics
+
+### Page Views
+
+```typescript
+// Track page views
+useEffect(() => {
+  trackPageView("/");
+}, []);
+```
+
+### User Events
+
+```typescript
+// Track user interactions
+const handleUrlShorten = () => {
+  trackEvent("url_shortened", {
+    hasCustomSlug: !!customSlug,
+    deduplicate: deduplicate,
+  });
+};
+```
+
+### Performance Monitoring
+
+```typescript
+// Monitor Core Web Vitals
+export function reportWebVitals(metric: NextWebVitalsMetric) {
+  // Send to analytics
+}
+```
+
+## 🔗 Dependencies
+
+### Core Dependencies
+
+- **next**: React framework
+- **react**: UI library
+- **react-dom**: React DOM
+- **@url-shortener/types**: Shared types
+
+### UI Dependencies
+
+- **@radix-ui/react-\***: Headless components
+- **class-variance-authority**: Component variants
+- **clsx**: Conditional classes
+- **tailwind-merge**: Tailwind class merging
+
+### Development Dependencies
+
+- **@types/react**: React types
+- **@types/node**: Node types
+- **eslint**: Linting
+- **typescript**: Type checking
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new features
+5. Run the test suite
+6. Submit a pull request
+
+## 📄 License
+
+MIT License - see [LICENSE](../../LICENSE) for details.
