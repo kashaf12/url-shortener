@@ -8,7 +8,7 @@ import {
   SLUG_LENGTH_CONSTRAINTS,
   MAX_COLLISION_RETRIES,
 } from "@url-shortener/types";
-import { PATTERN_TYPES } from "../constants/slug-generation.constants";
+import { PATTERN_TYPES } from "./constants/slug-generation.constants";
 
 // StrategyDiscoveryResponse is now imported from @url-shortener/types
 

@@ -5,7 +5,7 @@ import { SlugGenerationService } from "./services/slug-generation.service";
 import { SlugStrategyFactory } from "./services/slug-strategy.factory";
 import { SlugSpaceValidationService } from "./services/slug-space-validation.service";
 import { CustomSlugValidationService } from "./services/custom-slug-validation.service";
-import { SlugStrategiesController } from "./controllers/slug-strategies.controller";
+import { SlugStrategiesController } from "./slug-strategies.controller";
 import { NanoidSlugStrategy, UuidSlugStrategy } from "./strategies";
 
 /**
