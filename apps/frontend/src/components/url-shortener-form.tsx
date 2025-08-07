@@ -114,6 +114,7 @@ export function UrlShortenerForm() {
       });
       setTimeout(() => setCopiedField(null), 2000);
     } catch (err) {
+      console.error("Failed to copy to clipboard:", err);
       toast("Failed to copy", {
         description: "Please copy the text manually.",
         dismissible: true,

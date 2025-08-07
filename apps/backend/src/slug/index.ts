@@ -32,7 +32,7 @@ export {
 export { NanoidSlugStrategy, UuidSlugStrategy } from "./strategies";
 
 // Controllers
-export { SlugStrategiesController } from "./controllers/slug-strategies.controller";
+export { SlugStrategiesController } from "./slug-strategies.controller";
 
 // Constants
 export * from "./constants/slug-generation.constants";
