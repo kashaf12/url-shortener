@@ -162,6 +162,10 @@ export function clampSlugLength(
   min: number = MIN_SLUG_LENGTH,
   max: number = MAX_SLUG_LENGTH
 ): number {
+  // Handle NaN and invalid numbers
+  if (isNaN(length) || !isFinite(length)) {
+    return min;
+  }
   return Math.max(min, Math.min(max, Math.floor(length)));
 }
 

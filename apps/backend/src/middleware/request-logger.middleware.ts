@@ -11,8 +11,8 @@ export class RequestLoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction): void {
     const { method, originalUrl, ip, headers } = req;
-    const userAgent = headers["user-agent"] || "";
-    const contentLength = headers["content-length"] || "0";
+    const userAgent = headers?.["user-agent"] || "";
+    const contentLength = headers?.["content-length"] || "0";
 
     const startTime = Date.now();
     const requestId = this.generateRequestId();
