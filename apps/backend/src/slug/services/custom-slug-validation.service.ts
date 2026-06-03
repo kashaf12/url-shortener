@@ -72,19 +72,27 @@ export class CustomSlugValidationService {
     // Basic validation
     this.validateBasicRequirements(slugToValidate, errors);
 
-    // Length validation
-    this.validateLength(slugToValidate, errors, suggestions);
+    // Only continue validation if basic requirements pass
+    if (errors.length === 0) {
+      // Length validation
+      this.validateLength(slugToValidate, errors, suggestions);
 
-    // Pattern validation
-    this.validatePattern(slugToValidate, options, errors, suggestions);
+      // Pattern validation
+      this.validatePattern(slugToValidate, options, errors, suggestions);
 
-    // Reserved word validation
-    if (!options.allowReservedWords) {
-      this.validateReservedWords(slugToValidate, errors, warnings, suggestions);
+      // Reserved word validation
+      if (!options.allowReservedWords) {
+        this.validateReservedWords(
+          slugToValidate,
+          errors,
+          warnings,
+          suggestions
+        );
+      }
+
+      // Security validation
+      this.validateSecurity(slugToValidate, errors, warnings);
     }
-
-    // Security validation
-    this.validateSecurity(slugToValidate, errors, warnings);
 
     // Collision detection
     await this.validateCollision(
@@ -95,8 +103,12 @@ export class CustomSlugValidationService {
       suggestions
     );
 
-    // Generate additional suggestions if slug is invalid
-    if (errors.length > 0) {
+    // Generate additional suggestions if slug is invalid and we have a valid slug string
+    if (
+      errors.length > 0 &&
+      slugToValidate &&
+      typeof slugToValidate === "string"
+    ) {
       const additionalSuggestions = await this.generateSlugSuggestions(
         slugToValidate,
         collisionChecker,
@@ -137,7 +149,12 @@ export class CustomSlugValidationService {
     count: number = 5
   ): Promise<string[]> {
     const suggestions: string[] = [];
-    const baseSlug = slug.toLowerCase().replace(/[^a-z0-9-_]/g, "");
+    const baseSlug = slug
+      ? slug
+          .toString()
+          .toLowerCase()
+          .replace(/[^a-z0-9-_]/g, "")
+      : "slug";
 
     // Strategy 1: Append numbers
     for (let i = 1; i <= count && suggestions.length < count; i++) {
@@ -191,15 +208,15 @@ export class CustomSlugValidationService {
       slug
         .toLowerCase()
         .trim()
-        // Replace spaces and special characters with hyphens
+        // Replace spaces and underscores with hyphens
         .replace(/[\s_]+/g, "-")
-        // Remove non-URL-safe characters
+        // Remove non-URL-safe characters (keep alphanumeric, hyphens)
         .replace(/[^a-z0-9-]/g, "")
         // Remove multiple consecutive hyphens
         .replace(/-+/g, "-")
         // Remove leading/trailing hyphens
         .replace(/^-+|-+$/g, "")
-        // Ensure minimum length
+        // Ensure maximum length
         .substring(0, MAX_SLUG_LENGTH)
     );
   }
